@@ -1,7 +1,7 @@
-import {httpServer} from './src/http_server/index.js';
+import { httpServer } from './http_server/index';
 import robot from 'robotjs';
 import { WebSocketServer } from 'ws';
-import * as shapes from './src/shapes.js';
+import * as shapes from './shapes';
 
 const HTTP_PORT = 3000;
 

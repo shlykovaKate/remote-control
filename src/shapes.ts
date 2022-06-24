@@ -1,6 +1,6 @@
 import robot from 'robotjs';
 
-const drawCircle = (radius) => {
+const drawCircle = (radius:number) => {
   const mousePos = robot.getMousePos();
   robot.moveMouse(mousePos.x + radius, mousePos.y);
   robot.mouseToggle("down");
@@ -13,7 +13,7 @@ const drawCircle = (radius) => {
   robot.mouseToggle("up");
 };
 
-const drawSquare = (side) => {
+const drawSquare = (side:number) => {
   const {x, y} = robot.getMousePos();
   robot.mouseToggle("down");
   for (let i = 0; i <= side; i += 1) {
@@ -31,7 +31,7 @@ const drawSquare = (side) => {
   robot.mouseToggle("up");
 }
 
-const drawRectangle = (width, height) => {
+const drawRectangle = (width:number, height:number) => {
   const {x, y} = robot.getMousePos();
   robot.mouseToggle("down");
   for (let i = 0; i <= height; i += 1) {
