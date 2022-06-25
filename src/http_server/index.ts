@@ -11,7 +11,7 @@ export const httpServer = http.createServer(function (req, res) {
             res.end(JSON.stringify(err));
             return;
         }
-        res.writeHead(200);
+        res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
         res.end(data);
     });
 });

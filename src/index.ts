@@ -2,6 +2,7 @@ import { httpServer } from './http_server/index';
 import robot from 'robotjs';
 import { WebSocketServer } from 'ws';
 import * as shapes from './shapes';
+import * as image from './image';
 
 const HTTP_PORT = 3000;
 
@@ -66,6 +67,13 @@ wss.on('connection', (ws) => {
       case 'draw_rectangle': {
         shapes.drawRectangle(arg1, arg2);
         ws.send(`draw_rectangle\0`);
+        break;
+      }
+      case 'prnt_scrn': {
+        const printScreen = await image.printScreen();
+        const base64 = await printScreen.getBase64Async(printScreen.getMIME());
+        const imageString = base64.substring(22);
+        ws.send(`prnt_scrn ${imageString}\0`);
         break;
       }
     }
