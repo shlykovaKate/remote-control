@@ -1,8 +1,9 @@
 import { httpServer } from './http_server/index';
 import robot from 'robotjs';
 import { WebSocketServer, createWebSocketStream } from 'ws';
-import * as shapes from './shapes';
-import * as image from './image';
+import * as drawing from './drawing';
+import * as screenImage from './screenImage';
+import * as navigation from './navigation';
 
 const HTTP_PORT = 3000;
 const WS_PORT = 8080;
@@ -34,29 +35,25 @@ wss.on('connection', (ws) => {
 
     switch (command) {
       case 'mouse_up': {
-        const { x, y } = robot.getMousePos();
-        robot.moveMouse(x, y - arg1);
+        navigation.mouseUp(arg1);
         const { x:newX, y:newY } = robot.getMousePos();
         webSocketStream.write(`mouse_up__(currX:${newX},currY:${newY})\0`);
         break;
       }
       case 'mouse_down': {
-        const { x, y } = robot.getMousePos();
-        robot.moveMouse(x, y + arg1);
+        navigation.mouseDown(arg1);
         const { x:newX, y:newY } = robot.getMousePos();
         webSocketStream.write(`mouse_down__(currX:${newX},currY:${newY})\0`);
         break;
       }
       case 'mouse_left': {
-        const { x, y } = robot.getMousePos();
-        robot.moveMouse(x - arg1, y);
+        navigation.mouseLeft(arg1);
         const { x:newX, y:newY } = robot.getMousePos();
         webSocketStream.write(`mouse_left__(currX:${newX},currY:${newY})\0`);
         break;
       }
       case 'mouse_right': {
-        const { x, y } = robot.getMousePos();
-        robot.moveMouse(x + arg1, y);
+        navigation.mouseRight(arg1);
         const { x:newX, y:newY } = robot.getMousePos();
         webSocketStream.write(`mouse_right__(currX:${newX},currY:${newY})\0`);
         break;
@@ -67,22 +64,22 @@ wss.on('connection', (ws) => {
         break;
       }
       case 'draw_circle': {
-        shapes.drawCircle(arg1);
+        drawing.drawCircle(arg1);
         webSocketStream.write(`draw_circle\0`);
         break;
       }
       case 'draw_square': {
-        shapes.drawSquare(arg1);
+        drawing.drawSquare(arg1);
         webSocketStream.write(`draw_square\0`);
         break;
       }
       case 'draw_rectangle': {
-        shapes.drawRectangle(arg1, arg2);
+        drawing.drawRectangle(arg1, arg2);
         webSocketStream.write(`draw_rectangle\0`);
         break;
       }
       case 'prnt_scrn': {
-        const printScreen = await image.printScreen();
+        const printScreen = await screenImage.printScreen();
         const base64 = await printScreen.getBase64Async(printScreen.getMIME());
         const imageString = base64.substring(22);
         webSocketStream.write(`prnt_scrn ${imageString}\0`);
