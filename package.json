@@ -2,9 +2,10 @@
     "name": "ws_task",
     "version": "1.0.0",
     "description": "Template for the WebSocket remote control task",
+    "main": "index.js",
     "scripts": {
-        "start": "tsc && node ./dist/webSocket.js",
-        "start:dev": "nodemon --watch 'src/**/*' --ext 'ts' --exec 'npx ts-node ./src/webSocket.ts'"
+        "start": "tsc && node ./dist/index.js",
+        "start:dev": "nodemon --watch 'src/**/*' --ext 'ts' --exec 'npx ts-node ./src/index.ts'"
     },
     "author": "",
     "keywords": [],
